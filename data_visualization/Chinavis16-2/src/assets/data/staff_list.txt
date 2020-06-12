@@ -1,0 +1,1 @@
+["alessio scarafile", "amministrazione", "antonella capaldo", "daniel maglietta", "david vincenzetti", "delivery", "fabio busatto", "giancarlo russo", "list", "lucia rana", "marco bettini", "marco valleri", "massimiliano luppi", "mostapha maana", "ornella-dev", "rsales", "simonetta gallucci", "staff", "support", "vince"]
