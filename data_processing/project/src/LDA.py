@@ -18,7 +18,7 @@ def get_doc():
 
 def pretreatment(doc_complete):
 	# 变为小写，引入停用词，移除标点符号，词形还原
-	stop = set(stopwords.words('english'))	# 停用词
+	stop = set(stopwords.words('english')+['re','r','fwd','i','fw'])	# 停用词
 	exclude = set(string.punctuation)		# 标点符号
 	lemma = WordNetLemmatizer()
 
@@ -32,7 +32,7 @@ def pretreatment(doc_complete):
 
 	return doc_clean
 
-def train(doc_clean):
+def train(doc_clean, n_p):
 	# 创建语料的词语词典，每个单独的词语都会被赋予一个索引
 	dictionary = corpora.Dictionary(doc_clean)
 	# 使用上面的词典，将转换文档列表（语料）变成 DT 矩阵
@@ -40,7 +40,7 @@ def train(doc_clean):
 	# 使用 gensim 来创建 LDA 模型对象
 	Lda = gensim.models.ldamodel.LdaModel
 	# 在 DT 矩阵上运行和训练 LDA 模型
-	ldamodel = Lda(doc_term_matrix, num_topics=3, id2word = dictionary, passes=5)
+	ldamodel = Lda(doc_term_matrix, num_topics=n_p, id2word = dictionary, passes=2)
 	return ldamodel
 
 
@@ -53,8 +53,9 @@ def train(doc_clean):
 # doc_complete = [doc1, doc2, doc3, doc4, doc5]
 doc_complete = get_doc()
 doc_clean = pretreatment(doc_complete)
-ldamodel = train(doc_clean)
-# 输出结果
-res = ldamodel.print_topics(num_topics=3,num_words=3)
-for itm in res:
-	print(itm)
+for n_p in [2,5,10,20,30]:
+	ldamodel = train(doc_clean, n_p)
+	# 输出结果
+	res = ldamodel.print_topics(num_topics=n_p,num_words=20)
+	for itm in res:
+		print(itm)
