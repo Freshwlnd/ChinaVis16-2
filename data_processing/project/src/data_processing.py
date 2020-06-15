@@ -83,11 +83,14 @@ def get_datas():
 	# get_all_data
 	for fin_path in all_file_path:
 		fin_path = "../data/"+fin_path
-		with open(fin_path, "r", encoding="ISO-8859-1") as file_in:
-			reader = csv.reader(file_in)
-			data_list = list(reader)
-			datas += data_list[1:]
-		# break
+		try:
+			with open(fin_path, "r", encoding="ISO-8859-1") as file_in:
+				reader = csv.reader(file_in)
+				data_list = list(reader)
+				datas += data_list[1:]
+			# break
+		except BaseException as e:
+			print(fin_path, e)
 
 	#output_to_one_file #一次性读取文件时会卡住【也许是内存问题】
 	# with open('solved_datas.py', 'w') as output_file:
